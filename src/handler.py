@@ -20,27 +20,33 @@ class Handler(BaseHTTPRequestHandler):
     return
 
   def do_GET(self):
+    print("get path: {}".format(self.path))
     split_path = os.path.splitext(self.path)
     request_extension = split_path[1]
+    print("request_extension: {}".format(request_extension))
 
     if request_extension is "" or request_extension is ".html":
-          if self.path in routes:
-              handler = TemplateHandler()
-              handler.find(routes[self.path])
-          else:
-              handler = BadRequestHandler()
+      
+      if self.path in routes:
+        print("im here")
+        handler = TemplateHandler()
+        handler.find(routes[self.path])
+      else:
+        handler = BadRequestHandler()
 
     elif request_extension is ".py":
-        handler = BadRequestHandler()        
+      handler = BadRequestHandler()        
 
-    else:
-      print('ERROR')
-      handler = StaticHandler()
-      handler.find(self.path)
+    # else:
+    #   #print('ERROR')
+    #   print("path: " + self.path)
+    #   print(os.getcwd())
+    #   handler = StaticHandler()
+    #   handler.find(self.path)
  
-      self.respond({
-            'handler': handler
-        })
+    #   self.respond({
+    #         'handler': handler
+    #     })
 
     self.respond({'handler': handler})
 

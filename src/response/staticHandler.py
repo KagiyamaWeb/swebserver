@@ -28,6 +28,7 @@ class StaticHandler(RequestHandler):
         except:
             print("error")
             print("public{}".format(file_path))
+            print(extension)
             self.setContentType('notfound')
             self.setStatus(404)
             return False
