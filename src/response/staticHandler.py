@@ -8,6 +8,7 @@ class StaticHandler(RequestHandler):
             ".css" : "text/css",
             ".jpg" : "image/jpeg",
             ".png" : "image/png",
+            ".ico": "image/ico",
             "notfound" : "text/plain"
         }
 
@@ -16,16 +17,21 @@ class StaticHandler(RequestHandler):
         extension = split_path[1]
 
         try: 
-            if extension in (".jpg", ".jpeg", ".png"):
-                self.contents = open("public{}".format(file_path), 'rb')
+            print("public{}".format(file_path))
+
+            if extension in (".jpg", ".jpeg", ".png", ".ico"):
+                self.contents = open("src/public{}".format(file_path), 'rb')
             else:
-                self.contents = open("public{}".format(file_path), 'r')
+                print('opening css...')
+                self.contents = open("src/public{}".format(file_path), 'r')
 
 
             self.setContentType(extension)
             self.setStatus(200)
             return True
-        except:
+        #except:
+        except Exception as e: 
+            print(e)
             print("error")
             print("public{}".format(file_path))
             print(extension)
